@@ -1,0 +1,1 @@
+# skalena-openbanking-demo
