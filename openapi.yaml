@@ -1,0 +1,295 @@
+openapi: 3.0.0
+info:
+  title: OpenBanking API Sample
+  version: 1.0.0
+  description: REST API for managing customers, transactions, and operations with UUID-based identifiers.
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /customers:
+    get:
+      summary: Get all customers
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+
+    post:
+      summary: Create a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+
+  /customers/{id}:
+    get:
+      summary: Get customer by UUID
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      responses:
+        '200':
+          description: Customer data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Customer not found
+
+    put:
+      summary: Update a customer
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: Customer updated
+
+    delete:
+      summary: Delete a customer
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      responses:
+        '200':
+          description: Customer deleted
+
+  /transactions:
+    get:
+      summary: Get all transactions
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+
+    post:
+      summary: Create a new transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionInput'
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+
+  /transactions/{id}:
+    get:
+      summary: Get transaction by UUID
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      responses:
+        '200':
+          description: Transaction data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+
+    put:
+      summary: Update a transaction
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionInput'
+      responses:
+        '200':
+          description: Transaction updated
+
+    delete:
+      summary: Delete a transaction
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      responses:
+        '200':
+          description: Transaction deleted
+
+  /operations:
+    get:
+      summary: Get all operations
+      responses:
+        '200':
+          description: List of operations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Operation'
+
+    post:
+      summary: Create a new operation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationInput'
+      responses:
+        '201':
+          description: Operation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+
+  /operations/{id}:
+    get:
+      summary: Get operation by UUID
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      responses:
+        '200':
+          description: Operation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Operation'
+
+    put:
+      summary: Update an operation
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationInput'
+      responses:
+        '200':
+          description: Operation updated
+
+    delete:
+      summary: Delete an operation
+      parameters:
+        - $ref: '#/components/parameters/UUID'
+      responses:
+        '200':
+          description: Operation deleted
+
+components:
+  parameters:
+    UUID:
+      name: id
+      in: path
+      required: true
+      description: UUID of the resource
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+
+    CustomerInput:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        customer_id:
+          type: string
+          format: uuid
+        amount:
+          type: number
+          format: float
+        date:
+          type: string
+          format: date
+        description:
+          type: string
+
+    TransactionInput:
+      type: object
+      required: [customer_id, amount, date, description]
+      properties:
+        customer_id:
+          type: string
+          format: uuid
+        amount:
+          type: number
+          format: float
+        date:
+          type: string
+          format: date
+        description:
+          type: string
+
+    Operation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        operation_type:
+          type: string
+        status:
+          type: string
+        customer_id:
+          type: string
+          format: uuid
+
+    OperationInput:
+      type: object
+      required: [operation_type, status, customer_id]
+      properties:
+        operation_type:
+          type: string
+        status:
+          type: string
+        customer_id:
+          type: string
+          format: uuid

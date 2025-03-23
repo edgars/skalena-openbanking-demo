@@ -1,0 +1,170 @@
+{
+    "info": {
+      "name": "OpenBanking API (UUID CRUD)",
+      "_postman_id": "f0b9e123-4567-4abc-8def-1234567890ab",
+      "description": "Postman Collection for testing OpenBanking API with UUID-based CRUD operations",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Customers",
+        "item": [
+          {
+            "name": "Get All Customers",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": { "raw": "http://localhost:3000/customers", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["customers"] }
+            }
+          },
+          {
+            "name": "Get Customer by UUID",
+            "request": {
+              "method": "GET",
+              "url": { "raw": "http://localhost:3000/customers/{{customer_id}}", "host": ["localhost"], "port": "3000", "path": ["customers", "{{customer_id}}"] },
+              "header": []
+            }
+          },
+          {
+            "name": "Create Customer",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
+              },
+              "url": { "raw": "http://localhost:3000/customers", "host": ["localhost"], "port": "3000", "path": ["customers"] }
+            }
+          },
+          {
+            "name": "Update Customer",
+            "request": {
+              "method": "PUT",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"John Updated\",\n  \"email\": \"john.updated@example.com\"\n}"
+              },
+              "url": { "raw": "http://localhost:3000/customers/{{customer_id}}", "host": ["localhost"], "port": "3000", "path": ["customers", "{{customer_id}}"] }
+            }
+          },
+          {
+            "name": "Delete Customer",
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": { "raw": "http://localhost:3000/customers/{{customer_id}}", "host": ["localhost"], "port": "3000", "path": ["customers", "{{customer_id}}"] }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Transactions",
+        "item": [
+          {
+            "name": "Get All Transactions",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": { "raw": "http://localhost:3000/transactions", "host": ["localhost"], "port": "3000", "path": ["transactions"] }
+            }
+          },
+          {
+            "name": "Get Transaction by UUID",
+            "request": {
+              "method": "GET",
+              "url": { "raw": "http://localhost:3000/transactions/{{transaction_id}}", "host": ["localhost"], "port": "3000", "path": ["transactions", "{{transaction_id}}"] },
+              "header": []
+            }
+          },
+          {
+            "name": "Create Transaction",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"customer_id\": \"{{customer_id}}\",\n  \"amount\": 150.75,\n  \"date\": \"2024-03-20\",\n  \"description\": \"New Deposit\"\n}"
+              },
+              "url": { "raw": "http://localhost:3000/transactions", "host": ["localhost"], "port": "3000", "path": ["transactions"] }
+            }
+          },
+          {
+            "name": "Update Transaction",
+            "request": {
+              "method": "PUT",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"amount\": 99.99,\n  \"date\": \"2024-03-21\",\n  \"description\": \"Updated Transfer\"\n}"
+              },
+              "url": { "raw": "http://localhost:3000/transactions/{{transaction_id}}", "host": ["localhost"], "port": "3000", "path": ["transactions", "{{transaction_id}}"] }
+            }
+          },
+          {
+            "name": "Delete Transaction",
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": { "raw": "http://localhost:3000/transactions/{{transaction_id}}", "host": ["localhost"], "port": "3000", "path": ["transactions", "{{transaction_id}}"] }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Operations",
+        "item": [
+          {
+            "name": "Get All Operations",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": { "raw": "http://localhost:3000/operations", "host": ["localhost"], "port": "3000", "path": ["operations"] }
+            }
+          },
+          {
+            "name": "Get Operation by UUID",
+            "request": {
+              "method": "GET",
+              "url": { "raw": "http://localhost:3000/operations/{{operation_id}}", "host": ["localhost"], "port": "3000", "path": ["operations", "{{operation_id}}"] },
+              "header": []
+            }
+          },
+          {
+            "name": "Create Operation",
+            "request": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"operation_type\": \"Transfer\",\n  \"status\": \"Pending\",\n  \"customer_id\": \"{{customer_id}}\"\n}"
+              },
+              "url": { "raw": "http://localhost:3000/operations", "host": ["localhost"], "port": "3000", "path": ["operations"] }
+            }
+          },
+          {
+            "name": "Update Operation",
+            "request": {
+              "method": "PUT",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"operation_type\": \"Payment\",\n  \"status\": \"Completed\"\n}"
+              },
+              "url": { "raw": "http://localhost:3000/operations/{{operation_id}}", "host": ["localhost"], "port": "3000", "path": ["operations", "{{operation_id}}"] }
+            }
+          },
+          {
+            "name": "Delete Operation",
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": { "raw": "http://localhost:3000/operations/{{operation_id}}", "host": ["localhost"], "port": "3000", "path": ["operations", "{{operation_id}}"] }
+            }
+          }
+        ]
+      }
+    ]
+  }
+  
